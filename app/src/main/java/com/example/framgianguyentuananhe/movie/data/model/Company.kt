@@ -2,7 +2,7 @@ package com.example.framgianguyentuananhe.movie.data.model
 
 import com.google.gson.annotations.SerializedName
 
-class ProductionCompany(
+data class ProductionCompany(
 
     @SerializedName("id")
     val id: Int? = null,
