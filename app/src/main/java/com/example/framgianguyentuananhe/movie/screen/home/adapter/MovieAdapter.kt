@@ -28,17 +28,23 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
         holder.bindData(mMovies!![position])
     }
 
-    fun addData(movies: List<Movie>?) {
+    fun addData(movies: List<Movie>?, mIsReload: Boolean) {
         if (mMovies == null) {
             mMovies = ArrayList()
         }
+        if (mIsReload) mMovies!!.clear()
         mMovies!!.addAll(movies!!)
         notifyDataSetChanged()
     }
 
+    fun clear() {
+        mMovies!!.clear()
+    }
+
     override fun getItemCount(): Int = mMovies?.size ?: 0
 
-    class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+        LayoutContainer {
 
         fun bindData(movie: Movie) {
             text_movie_title.text = movie.title ?: movie.originalName ?: movie.originalTitle ?: ""

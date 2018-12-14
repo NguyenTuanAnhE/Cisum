@@ -2,12 +2,14 @@ package com.example.framgianguyentuananhe.movie.utils
 
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 
-abstract class EndlessScrollListener(val mGridLayoutManager: GridLayoutManager) : RecyclerView.OnScrollListener() {
+abstract class EndlessScrollListener(val mGridLayoutManager: GridLayoutManager) :
+    RecyclerView.OnScrollListener() {
     private var mFirstVisibleItem: Int = 0
     private var mVisibleItemCount: Int = 0
     private var mTotalItemCount: Int = 0
-    private val mVisibleThreshold = 2
+    private val mVisibleThreshold = 1
     private var mPreviousTotal = 0
     private var loading = true
     private var currentPage = 1
@@ -24,9 +26,9 @@ abstract class EndlessScrollListener(val mGridLayoutManager: GridLayoutManager) 
                 mPreviousTotal = mTotalItemCount
             }
         }
-
-        if (!loading && mTotalItemCount - mVisibleItemCount <= mFirstVisibleItem + mVisibleThreshold) {
+        if (!loading && mTotalItemCount - mVisibleItemCount == mFirstVisibleItem) {
             currentPage++
+            Log.d("asd", "asd" + currentPage)
 
             onLoadMore(currentPage)
 

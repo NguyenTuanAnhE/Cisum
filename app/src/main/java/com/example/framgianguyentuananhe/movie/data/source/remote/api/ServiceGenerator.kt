@@ -18,11 +18,6 @@ import java.util.concurrent.TimeUnit
 
 object ServiceGenerator {
 
-    private fun provideApplication(): Context? {
-        val application = MovieApplication()
-        return application.context
-    }
-
     private fun provideInterceptor(): Interceptor = MovieInterceptor()
 
     private fun provideGson(): Gson = GsonBuilder()
