@@ -5,8 +5,9 @@ import com.example.framgianguyentuananhe.movie.data.source.GenreDataSource
 import com.example.framgianguyentuananhe.movie.data.source.remote.api.Api
 import com.example.framgianguyentuananhe.movie.utils.Constant
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class GenreRemoteDateSource(private val mApi: Api) : GenreDataSource.Remote {
+class GenreRemoteDataSource @Inject constructor(private val mApi: Api) : GenreDataSource.Remote {
     override fun getTVGenres(): Observable<Genre> {
         return mApi.getTVGenres(Constant.API_KEY, Constant.LANGUAGE_ENGLISH)
     }
