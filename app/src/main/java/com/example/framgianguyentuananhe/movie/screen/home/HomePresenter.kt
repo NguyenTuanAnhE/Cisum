@@ -8,10 +8,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class HomePresenter(
-    private val mView: HomeContract.View,
     private val mGenreRepository: GenreRepository,
     private val mMovieRepository: MovieRepository
 ) : HomeContract.Action {
+
+    lateinit var mView: HomeContract.View
 
     override fun getMoviesByGenre(query: String, page: Int) {
         mSubcription.add(mMovieRepository.getMovieByGenre(query, page)

@@ -8,11 +8,6 @@ import android.view.View
 import com.example.framgianguyentuananhe.movie.R
 import com.example.framgianguyentuananhe.movie.data.model.Genre
 import com.example.framgianguyentuananhe.movie.data.model.Movie
-import com.example.framgianguyentuananhe.movie.data.repositories.GenreRepository
-import com.example.framgianguyentuananhe.movie.data.repositories.MovieRepository
-import com.example.framgianguyentuananhe.movie.data.source.remote.GenreRemoteDateSource
-import com.example.framgianguyentuananhe.movie.data.source.remote.MovieRemoteDataSource
-import com.example.framgianguyentuananhe.movie.data.source.remote.api.ServiceGenerator
 import com.example.framgianguyentuananhe.movie.screen.base.BaseActivity
 import com.example.framgianguyentuananhe.movie.screen.home.adapter.GenreAdapter
 import com.example.framgianguyentuananhe.movie.screen.home.adapter.MovieAdapter
@@ -20,10 +15,12 @@ import com.example.framgianguyentuananhe.movie.utils.EndlessScrollListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_genre.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), HomeContract.View {
 
-    private var mPresenter: HomePresenter? = null
+     val mPresenter: HomePresenter by inject()
+
     var mGenreAdapter: GenreAdapter? = null
     var mMovieAdapter: MovieAdapter? = MovieAdapter()
     lateinit var mLoadMore: EndlessScrollListener
@@ -33,16 +30,9 @@ class MainActivity : BaseActivity(), HomeContract.View {
     override fun getContentLayout(): Int = R.layout.activity_main
 
     override fun initComponents() {
-        val api = ServiceGenerator.getApi(this)
-        val genreRemoteDateSource = GenreRemoteDateSource(api)
-        val movieRemoteDataSource = MovieRemoteDataSource(api)
-        mPresenter = HomePresenter(
-            this,
-            GenreRepository(genreRemoteDateSource),
-            MovieRepository(movieRemoteDataSource)
-        )
-        mPresenter!!.getGenres()
-        mPresenter!!.getMovies()
+        mPresenter.mView = this
+        mPresenter.getGenres()
+        mPresenter.getMovies()
     }
 
     override fun initView() {
@@ -72,7 +62,7 @@ class MainActivity : BaseActivity(), HomeContract.View {
             if (text_genre.text.toString() != it) {
                 mLoadMore.refresh()
                 recycler_movie.smoothScrollToPosition(0)
-                mPresenter!!.getMoviesByGenre(it!!, 1)
+                mPresenter.getMoviesByGenre(it!!, 1)
             }
         }
         recycler_genre!!.adapter = mGenreAdapter
@@ -80,7 +70,7 @@ class MainActivity : BaseActivity(), HomeContract.View {
         mLoadMore =
                 object : EndlessScrollListener(recycler_movie.layoutManager as GridLayoutManager) {
                     override fun onLoadMore(currentPage: Int) {
-                        mPresenter!!.getMoviesByGenre(text_genre!!.text.toString(), currentPage)
+                        mPresenter.getMoviesByGenre(text_genre!!.text.toString(), currentPage)
                     }
                 }
         recycler_movie.addOnScrollListener(mLoadMore)
@@ -88,7 +78,7 @@ class MainActivity : BaseActivity(), HomeContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter!!.mSubcription.clear()
+        mPresenter.mSubcription.clear()
     }
 
     override fun hideLoadingProgress() {

@@ -22,9 +22,7 @@ object ServiceGenerator {
 
     private fun provideGson(): Gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-//        .excludeFieldsWithoutExposeAnnotation()
         .create()
-
 
     private fun provideCache(context: Context): Cache {
         val cacheSize = 24L * 24 * 1000;
@@ -45,12 +43,11 @@ object ServiceGenerator {
         return clientBuilder.build()
     }
 
-    private fun createMovieService(context: Context): Retrofit = Retrofit.Builder()
+     fun createMovieService(context: Context): Retrofit = Retrofit.Builder()
         .baseUrl(Constant.END_POINT_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(provideGson()))
         .client(provideOkHttpClient(context))
         .build()
 
-    fun getApi(context: Context): Api = createMovieService(context).create(Api::class.java)
 }
