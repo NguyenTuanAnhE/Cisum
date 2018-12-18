@@ -3,8 +3,9 @@ package com.example.framgianguyentuananhe.movie.data.repositories
 import com.example.framgianguyentuananhe.movie.data.model.Genre
 import com.example.framgianguyentuananhe.movie.data.source.GenreDataSource
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class GenreRepository(private val mGenreDataSource: GenreDataSource.Remote) :
+class GenreRepository @Inject constructor(private val mGenreDataSource: GenreDataSource.Remote) :
     GenreDataSource.Remote {
 
     override fun getTVGenres(): Observable<Genre> =
