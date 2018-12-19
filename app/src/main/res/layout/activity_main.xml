@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
@@ -10,17 +9,15 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constrain_layout"
-        android:background="@color/color_black"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_black">
 
-        <Button
-            android:id="@+id/button_genre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/layout_toolbar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="Genre"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_movie"
@@ -30,9 +27,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
             app:spanCount="2"
-            tools:listitem="@layout/item_movie"/>
+            tools:listitem="@layout/item_movie" />
 
         <ProgressBar
             android:id="@+id/progress_loading"
@@ -42,24 +39,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/view_faded_in"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/color_gray_faded_in"
+            android:background="@color/color_black_faded_in"
             android:clickable="true"
             android:focusable="true"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </android.support.constraint.ConstraintLayout>
 
-    <include layout="@layout/bottom_sheet_genre"/>
+    <include layout="@layout/bottom_sheet_genre" />
 
 </android.support.design.widget.CoordinatorLayout>
